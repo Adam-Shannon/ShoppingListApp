@@ -1,0 +1,138 @@
+<HomeScreen>:
+    id: home
+    ScrollViewMain:
+        id: scroller
+        do_scroll_y: True
+        background_color: (26/255, 77/255, 129/255, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        ItemList:
+            id: items
+            size_hint: 1,None
+            height: self.minimum_height + 60
+    
+     
+    ActionBar:
+        pos: 0,0
+        size_hint: 1,None
+        height: "60dp"
+        background_color: (52/255, 110/255, 235/255,1)        
+        
+        ActionView:
+            id: 'av'
+            ActionPrevious:
+                with_previous: False
+                title: 'Shopping List'
+                app_icon: ''
+            ActionButton:
+                id: new_item
+                text: ''
+                icon: 'Images/new_item_iconw.png'
+                on_release:
+                    root.ids["items"].addNewItem()
+            ActionButton:
+                id: stats
+                text: 'stats'
+                on_release:
+                    root.ids["items"].getStats()
+            
+
+<NewItemPopUp>:
+    title: "Add new Item"
+    id: pop
+    size_hint: 0.5,0.65
+    GridLayout:
+        cols: 2
+        rows: 5
+        size_hint: 1,1
+ #input for new items name       
+        Label:
+            size_hint: (0.5,None)
+            height: "60dp"
+            text: "New Item Name: "
+        TextInput:
+            id: newItem
+            size_hint: (0.5,None)
+            height: "60dp"
+            text: ""
+            multiline: False  
+#input for new items shop   
+        Label:
+            size_hint: (0.5,None)
+            height: "60dp"
+            text: "Shop: " 
+        TextInput:
+            id: newShop
+            size_hint: (0.5,None)
+            height: "60dp"
+            text: ""
+            multiline: False
+#input for new items amount
+        Label:
+            size_hint: (0.5,None)
+            height: "60dp"
+            text: "amount: "   
+        TextInput:
+            id: amountbox
+            size_hint: (None,None)
+            height: "60dp"
+            width: "100dp"
+            text: ""
+            multiline: False
+#input for new items price
+        Label:
+            size_hint: (0.5,None)
+            height: "60dp"
+            text: "price: "   
+        TextInput:
+            id: pricebox
+            size_hint: (None,None)
+            height: "60dp"
+            width: "100dp"
+            text: ""
+            multiline: False   
+#cancel and submit buttons for new item popup
+        Button:
+            text:"cancel"
+            size_hint: (0.5,1)
+            on_release:
+                pop.dismiss()
+        
+        Button:
+            text:"submit"
+            size_hint: (0.5,1)
+            on_release:
+                pop.add(newItem,newShop,amountbox,pricebox)
+        
+                
+<EditItemPopUp>:
+    title: "Edit or Remove Item"
+    id: editpop
+    size_hint: 0.5,0.4
+    GridLayout:
+        cols: 3
+        rows: 1
+        size_hint: 1,1
+
+        Button:
+            text:"cancel"
+            size_hint:(1,0.5)
+            on_release:
+                editpop.dismiss()
+        
+        Button:
+            text:"Delete"
+            size_hint:(1,0.5)
+            on_release:
+                editpop.delete()
+        
+        Button:
+            text:"edit"
+            size_hint: (1,0.5)
+            on_release:
+                editpop.edit()
+
